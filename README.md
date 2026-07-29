@@ -1,36 +1,335 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💍 Ultimate Wedding Website
 
-## Getting Started
+A modern, elegant and reusable wedding website built with **Next.js 16**, **React 19**, **TypeScript**, **Tailwind CSS v4**, **shadcn/ui** and **Supabase**.
 
-First, run the development server:
+The goal of this project is to provide a beautiful, responsive wedding website that can be reused for any couple simply by changing a single data file and a few images.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+# Features
+
+- ✨ Beautiful responsive landing page
+- 📖 Couple story section
+- 💒 Ceremony & celebration details
+- 👗 Dress code section
+- ❓ FAQ with animated expandable questions
+- 📝 RSVP form with validation
+- ☁️ RSVP submissions stored in Supabase
+- 🔐 Password-protected admin dashboard
+- 📊 Statistics dashboard
+- 🗑 Delete guests from the admin panel
+- ♻️ Fully reusable architecture
+
+---
+
+# Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- shadcn/ui
+- Motion (animations)
+- React Hook Form
+- Zod
+- Supabase
+
+---
+
+# Project Structure
+
+```
+app/
+    admin/
+    api/
+    page.tsx
+
+components/
+    Hero.tsx
+    Story.tsx
+    WeddingDetails.tsx
+    FAQ.tsx
+    RSVP/
+    layout/
+    ui/
+
+data/
+    wedding.ts
+
+lib/
+    supabase.ts
+
+public/
+    ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Reusability
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project has been intentionally designed so it can be reused for any wedding.
 
-## Learn More
+Almost all editable content lives inside:
 
-To learn more about Next.js, take a look at the following resources:
+```
+data/wedding.ts
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To create a new wedding website, most of the time you only need to edit this file.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+It contains information such as:
 
-## Deploy on Vercel
+- Couple names
+- Wedding date
+- Hero text
+- Story
+- Ceremony
+- Celebration
+- Dress code
+- FAQ
+- Images
+- etc.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+No React components need to be modified for normal content changes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+# Images
+
+Images are stored inside the **public/** folder.
+
+Current naming convention:
+
+```
+flower.png
+wedding.png
+red-carpet.png
+wedding-dress.png
+
+partner-photo-1.jpg
+partner-photo-2.jpg
+partner-photo-3.jpg
+```
+
+These filenames are referenced throughout the components.
+
+For future weddings it is recommended to simply replace the images while keeping the same filenames.
+
+This avoids touching any code.
+
+---
+
+# Editing the Wedding
+
+All editable information lives inside:
+
+```
+data/wedding.ts
+```
+
+Example:
+
+```ts
+couple: {
+    partner1: "Jesús",
+    partner2: "Paula",
+}
+
+date: "11 September 2026"
+
+heroText: "..."
+
+story: "..."
+
+ceremony: {
+    venue: "...",
+    address: "...",
+    time: "...",
+}
+
+celebration: {
+    venue: "...",
+    address: "...",
+    time: "...",
+}
+
+questions: [
+    ...
+]
+```
+
+Whenever possible, edit this file instead of modifying components.
+
+---
+
+# RSVP
+
+Guests submit the RSVP form.
+
+The frontend sends a POST request to:
+
+```
+POST /api/rsvp
+```
+
+The API validates and stores the information in Supabase.
+
+Stored information includes:
+
+- First name
+- Last name
+- Email
+- Menu preference
+- Food notes / allergies
+- Bus usage
+- Favourite drink
+- Must-play song
+
+---
+
+# Database
+
+Supabase is used as the database.
+
+The application never talks directly to Supabase from the browser.
+
+Architecture:
+
+```
+Browser
+    ↓
+Next.js API Route
+    ↓
+Supabase
+```
+
+This keeps the Service Role Key private.
+
+---
+
+# Admin Dashboard
+
+The project includes an admin dashboard located at:
+
+```
+/admin
+```
+
+Features:
+
+- View every RSVP
+- Guest statistics
+- Number of guests
+- Vegetarian count
+- Vegan count
+- Bus count
+- Delete guests
+
+---
+
+# Authentication
+
+The admin area is protected using **HTTP Basic Authentication** through the Next.js proxy.
+
+Access is controlled via two environment variables:
+
+```
+ADMIN_USERNAME
+ADMIN_PASSWORD
+```
+
+Only authenticated users can access `/admin`.
+
+---
+
+# Environment Variables
+
+Create a `.env.local` file with:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+
+SUPABASE_SERVICE_ROLE_KEY=
+
+ADMIN_USERNAME=
+
+ADMIN_PASSWORD=
+```
+
+When deploying (e.g. Vercel), these same variables must also be configured in the project's Environment Variables.
+
+---
+
+# API Routes
+
+Current API endpoints:
+
+```
+POST /api/rsvp
+```
+
+Creates a new RSVP.
+
+---
+
+```
+DELETE /api/guests/:id
+```
+
+Deletes a guest.
+
+---
+
+# Styling
+
+The project uses:
+
+- Tailwind CSS v4
+- shadcn/ui components
+- Custom typography
+- Responsive layout
+- Motion animations
+
+Animations are intentionally subtle to create an elegant wedding experience.
+
+---
+
+# Future Improvements
+
+Potential ideas:
+
+- Export guests as CSV
+- Search guests
+- Filter by menu
+- Filter by bus
+- Email confirmation after RSVP
+- Google Maps links
+- Accommodation recommendations
+- Photo gallery
+- Countdown to the wedding
+- Multi-language support
+- Music playlist integration
+- Wedding gift list
+- Timeline of the day
+
+---
+
+# Philosophy
+
+This project aims to be:
+
+- Elegant
+- Minimal
+- Fast
+- Responsive
+- Easy to customise
+- Easy to reuse
+- Easy to deploy
+
+The only files that should normally require editing for a new wedding are:
+
+- `data/wedding.ts`
+- Images inside `public/`
+- Environment variables
+
+Everything else should remain unchanged.
