@@ -6,7 +6,7 @@ export const wedding: Wedding = {
     partner2: "Paula",
   },
   heroImage: "/partner-photo-1.jpg",
-  date: "11 Septiembre 2026",
+  date: "11 Octubre 2026",
 
   heroText: "¡Nos casamos!",
 
