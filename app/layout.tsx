@@ -15,7 +15,7 @@ const heading = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Jesús & Paula",
+  title: "Paula & Jesús",
   description: "Wedding website",
 };
 
