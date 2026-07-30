@@ -8,12 +8,12 @@ import { wedding } from "@/data/wedding"
 export default function Home() {
   return (
     <main>
-      <Hero
+      {/* <Hero
         wedding={wedding}
       />
       <Story story={wedding.story} />
       <WeddingDetails celebration={wedding.celebration} ceremony={wedding.ceremony} dressCodeText={wedding.dressCodeDescription} />
-      <FAQ questions={wedding.questions} />
+      <FAQ questions={wedding.questions} /> */}
       <RSVP />
     </main>
   )
