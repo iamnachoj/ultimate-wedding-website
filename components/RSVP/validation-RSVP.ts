@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 export const rsvpSchema = z.object({
+  assistance: z.enum([
+    "confirm",
+    "decline",
+  ]),
   firstName: z
     .string()
     .trim()
@@ -11,15 +15,10 @@ export const rsvpSchema = z.object({
     .trim()
     .min(2, "Introduce tus apellidos"),
 
-  email: z
-    .string()
-    .trim()
-    .email("Correo electrónico no válido"),
-
   menu: z.enum([
-    "standard",
+    "meat",
     "vegetarian",
-    "vegan",
+    "fish",
   ]),
 
   foodNote: z
@@ -31,6 +30,24 @@ export const rsvpSchema = z.object({
     "yes",
     "no",
   ]),
+
+  busJourney: z
+  .enum([
+    "outbound",
+    "return",
+    "both",
+  ])
+  .optional(),
+
+returnStop: z
+  .enum([
+    "montequinto",
+    "melia",
+    "puerta-jerez",
+  ])
+  .optional(),
+
+busNotes: z.string().optional(),
 
   favouriteDrink: z
     .string()

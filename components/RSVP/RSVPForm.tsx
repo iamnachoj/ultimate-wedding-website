@@ -11,6 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+
+const journeyLabels = {
+  outbound: "Ida",
+  return: "Vuelta",
+  both: "Ida y vuelta",
+};
 
 export default function RSVPForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -18,22 +25,29 @@ export default function RSVPForm() {
   const {
     register,
     control,
+    watch,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<RSVPFormData>({
     resolver: zodResolver(rsvpSchema),
     defaultValues: {
+      assistance: "confirm",
       firstName: "",
       lastName: "",
-      email: "",
-      menu: "standard",
+      menu: "meat",
       foodNote: "",
       bus: "yes",
+      busJourney: undefined,
+      returnStop: undefined,
+      busNotes: "",
       favouriteDrink: "",
       mustPlaySong: "",
     },
   });
+
+  const bus = watch("bus");
+  const busJourney = watch("busJourney");
 
   async function onSubmit(data: RSVPFormData) {
     const response = await fetch("/api/rsvp", {
@@ -80,6 +94,53 @@ export default function RSVPForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-8"
     >
+
+        <div>
+        <Label className="mb-2">
+          ¿Nos acompañarás en nuestro gran día?
+        </Label>
+
+        <Controller
+          control={control}
+          name="assistance"
+          render={({ field }) => (
+            <RadioGroup
+              value={field.value}
+              onValueChange={field.onChange}
+              className="mt-4 space-y-3 md:grid md:grid-cols-2"
+            >
+              <div className="flex items-center gap-3">
+                <RadioGroupItem
+                  value="confirm"
+                  id="confirm"
+                />
+
+                <Label htmlFor="confirm">
+                  Sí, ¡Por supuesto!
+                </Label>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <RadioGroupItem
+                  value="decline"
+                  id="decline"
+                />
+
+                <Label htmlFor="decline">
+                  No, lo siento
+                </Label>
+              </div>
+            </RadioGroup>
+          )}
+        />
+
+        {errors.assistance && (
+          <p className="mt-2 text-sm text-red-500">
+            {errors.assistance.message}
+          </p>
+        )}
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <Label htmlFor="firstName" className="mb-2">
@@ -119,25 +180,6 @@ export default function RSVPForm() {
       </div>
 
       <div>
-        <Label htmlFor="email" className="mb-2">
-          Correo electrónico
-        </Label>
-
-        <Input
-          id="email"
-          type="email"
-          placeholder="correo@email.com"
-          {...register("email")}
-        />
-
-        {errors.email && (
-          <p className="mt-2 text-sm text-red-500">
-            {errors.email.message}
-          </p>
-        )}
-      </div>
-
-      <div>
         <Label className="mb-2">
           Preferencia de Menú
         </Label>
@@ -149,16 +191,27 @@ export default function RSVPForm() {
             <RadioGroup
               value={field.value}
               onValueChange={field.onChange}
-              className="mt-4 space-y-3"
+              className="mt-4 space-y-3 md:grid md:grid-cols-3"
             >
               <div className="flex items-center gap-3">
                 <RadioGroupItem
-                  value="standard"
-                  id="standard"
+                  value="meat"
+                  id="meat"
                 />
 
-                <Label htmlFor="standard">
-                  Estándar (Carne/Pescado)
+                <Label htmlFor="meat">
+                  Carne
+                </Label>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <RadioGroupItem
+                  value="fish"
+                  id="fish"
+                />
+
+                <Label htmlFor="fish">
+                  Pescado
                 </Label>
               </div>
 
@@ -173,16 +226,6 @@ export default function RSVPForm() {
                 </Label>
               </div>
 
-              <div className="flex items-center gap-3">
-                <RadioGroupItem
-                  value="vegan"
-                  id="vegan"
-                />
-
-                <Label htmlFor="vegan">
-                  Vegano
-                </Label>
-              </div>
             </RadioGroup>
           )}
         />
@@ -213,60 +256,171 @@ export default function RSVPForm() {
         )}
       </div>
 
+      <div className="space-y-6">
+
+  <div>
+    <Label className="mb-2">
+      ¿Necesitarás autobús?
+    </Label>
+
+    <Controller
+      control={control}
+      name="bus"
+      render={({ field }) => (
+        <RadioGroup
+          value={field.value}
+          onValueChange={field.onChange}
+          className="mt-4 space-y-3"
+        >
+          <div className="flex items-center gap-3">
+            <RadioGroupItem
+              value="yes"
+              id="bus-yes"
+            />
+            <Label htmlFor="bus-yes">
+              Sí
+            </Label>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <RadioGroupItem
+              value="no"
+              id="bus-no"
+            />
+            <Label htmlFor="bus-no">
+              No
+            </Label>
+          </div>
+        </RadioGroup>
+      )}
+    />
+
+    {errors.bus && (
+      <p className="mt-2 text-sm text-red-500">
+        {errors.bus.message}
+      </p>
+    )}
+  </div>
+
+  {bus === "yes" && (
+    <div className="space-y-6 rounded-2xl border border-stone-200 bg-stone-50 p-6">
+
+      {/* Trayecto */}
+
       <div>
-        <Label className="mb-2">
-          ¿Necesitarás autobús?
+        <Label htmlFor="busJourney">
+          ¿Qué trayecto necesitas?
         </Label>
 
         <Controller
           control={control}
-          name="bus"
+          name="busJourney"
           render={({ field }) => (
-            <RadioGroup
+            <Select
               value={field.value}
               onValueChange={field.onChange}
-              className="mt-4 space-y-3"
             >
-              <div className="flex items-center gap-3">
-                <RadioGroupItem
-                  value="yes"
-                  id="bus-yes"
-                />
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="Selecciona una opción">
+                  {field.value ? journeyLabels[field.value] : undefined}
+                </SelectValue>
+              </SelectTrigger>
 
-                <Label htmlFor="bus-yes">
-                  Sí
-                </Label>
-              </div>
+              <SelectContent>
+                <SelectItem value="outbound">
+                  Ida (Torre del Oro · 13:30h)
+                </SelectItem>
 
-              <div className="flex items-center gap-3">
-                <RadioGroupItem
-                  value="no"
-                  id="bus-no"
-                />
+                <SelectItem value="return">
+                  Vuelta (02:00h)
+                </SelectItem>
 
-                <Label htmlFor="bus-no">
-                  No
-                </Label>
-              </div>
-            </RadioGroup>
+                <SelectItem value="both">
+                  Ida y vuelta
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
+      </div>
+
+      {(busJourney === "return" || busJourney === "both") && (
+        <div>
+
+          <Label htmlFor="returnStop">
+            ¿Dónde quieres bajarte?
+          </Label>
+
+          <Controller
+            control={control}
+            name="returnStop"
+            render={({ field }) => (
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="Selecciona una parada" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="montequinto">
+                    Pubs de Montequinto
+                  </SelectItem>
+
+                  <SelectItem value="melia">
+                    Meliá Sevilla
+                  </SelectItem>
+
+                  <SelectItem value="puerta-jerez">
+                    Puerta Jerez
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+      )}
+
+      <div>
+        <Label htmlFor="busNotes">
+          Comentarios (opcional)
+        </Label>
+
+        <Controller
+          control={control}
+          name="busNotes"
+          render={({ field }) => (
+            <Textarea
+              {...field}
+              rows={4}
+              placeholder="¿Necesitas indicarnos algo? (niños, carrito, movilidad reducida, etc.)"
+              className="mt-2"
+            />
           )}
         />
 
-        {errors.bus && (
-          <p className="mt-2 text-sm text-red-500">
-            {errors.bus.message}
-          </p>
-        )}
+        <p className="mt-2 text-sm text-stone-500">
+          La ida saldrá desde la <strong>Torre del Oro</strong> a las{" "}
+          <strong>13:30h</strong>. La vuelta saldrá desde la hacienda a las{" "}
+          <strong>02:00h</strong>.
+        </p>
       </div>
-            <div className="grid gap-6 md:grid-cols-2">
+
+    </div>
+  )}
+
+  </div>
+      
+      <div className="grid gap-6 md:grid-cols-2">
         <div>
           <Label htmlFor="favouriteDrink" className="mb-2">
-            Bebida favorita
+            ¿Con qué copa lo vas a dar todo?
           </Label>
 
           <Input
             id="favouriteDrink"
-            placeholder="Tinto de verano 🍷"
+            placeholder="Ron cola 🍹"
             {...register("favouriteDrink")}
           />
 

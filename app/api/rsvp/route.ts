@@ -13,12 +13,14 @@ export async function POST(request: Request) {
       .insert({
         first_name: body.firstName,
         last_name: body.lastName,
-        email: body.email,
 
         menu: body.menu,
         food_note: body.foodNote,
 
         bus: body.bus,
+        bus_journey: body.busJourney,
+        return_stop: body.returnStop,
+        bus_notes: body.busNotes,
 
         favourite_drink: body.favouriteDrink,
         must_play_song: body.mustPlaySong,

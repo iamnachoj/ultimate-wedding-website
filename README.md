@@ -178,7 +178,6 @@ Stored information includes:
 
 - First name
 - Last name
-- Email
 - Menu preference
 - Food notes / allergies
 - Bus usage
@@ -302,7 +301,6 @@ Potential ideas:
 - Search guests
 - Filter by menu
 - Filter by bus
-- Email confirmation after RSVP
 - Google Maps links
 - Accommodation recommendations
 - Photo gallery

@@ -41,15 +41,23 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     <th className="px-5 py-4 text-left">Nombre</th>
 
                     <th className="px-5 py-4 text-left">
-                    Email
-                    </th>
-
-                    <th className="px-5 py-4 text-left">
                     Menú
                     </th>
 
                     <th className="px-5 py-4 text-left">
                     Bus
+                    </th>
+
+                    <th className="px-5 py-4 text-left">
+                    Viaje de bus
+                    </th>
+
+                    <th className="px-5 py-4 text-left">
+                    Para de vuelta
+                    </th>
+
+                    <th className="px-5 py-4 text-left">
+                    Notas de viaje
                     </th>
 
                     <th className="px-5 py-4 text-left">
@@ -61,7 +69,7 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     </th>
 
                     <th className="px-5 py-4 text-left">
-                    Observaciones
+                    Observaciones de comida
                     </th>
                     <th className="px-5 py-4 text-right">
                         Acciones
@@ -84,15 +92,23 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     </td>
 
                     <td className="px-5 py-4">
-                        {guest.email}
-                    </td>
-
-                    <td className="px-5 py-4">
                         {guest.menu}
                     </td>
 
                     <td className="px-5 py-4">
                         {guest.bus === "yes" ? "🚌 Sí" : "—"}
+                    </td>
+
+                    <td className="px-5 py-4">
+                        {guest.bus_journey === "outbound" ? "Ida 🚌" : guest.bus_journey === "return" ? "Vuelta 🚌" : guest.bus_journey === "both" ? "Ida y vuelta 🚌" : "—"}
+                    </td>
+
+                    <td className="px-5 py-4">
+                       {guest.return_stop === "montequinto" ? "Montequinto" : guest.return_stop === "melia" ? "Melia" : guest.return_stop === "puerta-jerez" ? "Puerta Jerez" : "—"}
+                    </td>
+
+                    <td className="px-5 py-4">
+                        {guest.bus_notes || "—"}
                     </td>
 
                     <td className="px-5 py-4">
