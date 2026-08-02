@@ -22,12 +22,16 @@ export default async function AdminPage() {
 
   const busGuests = guests.filter((g) => g.bus === "yes").length;
 
-  const vegetarians = guests.filter(
-    (g) => g.menu === "vegetarian"
+  const meat = guests.filter(
+    (g) => g.menu === "meat"
   ).length;
 
-  const vegans = guests.filter(
-    (g) => g.menu === "vegan"
+  const fish = guests.filter(
+    (g) => g.menu === "fish"
+  ).length;
+
+  const vegetarians = guests.filter(
+    (g) => g.menu === "vegetarian"
   ).length;
 
   return (
@@ -47,7 +51,7 @@ export default async function AdminPage() {
 
       {/* KPIs */}
 
-      <div className="mb-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mb-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-5">
 
         <Card className="rounded-3xl p-6">
           <p className="text-sm uppercase tracking-widest text-stone-500">
@@ -71,21 +75,31 @@ export default async function AdminPage() {
 
         <Card className="rounded-3xl p-6">
           <p className="text-sm uppercase tracking-widest text-stone-500">
-            Vegetarianos
+            Carne
           </p>
 
           <p className="mt-3 text-5xl font-heading">
-            {vegetarians}
+            {meat}
           </p>
         </Card>
 
         <Card className="rounded-3xl p-6">
           <p className="text-sm uppercase tracking-widest text-stone-500">
-            Veganos
+            Pescado
           </p>
 
           <p className="mt-3 text-5xl font-heading">
-            {vegans}
+            {fish}
+          </p>
+        </Card>
+
+        <Card className="rounded-3xl p-6">
+          <p className="text-sm uppercase tracking-widest text-stone-500">
+            Vegetarianos
+          </p>
+
+          <p className="mt-3 text-5xl font-heading">
+            {vegetarians}
           </p>
         </Card>
 
