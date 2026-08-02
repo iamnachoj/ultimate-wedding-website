@@ -3,6 +3,8 @@ import { supabase } from "@/lib/supabase";
 import { Card } from "@/components/ui/card";
 import { GuestTable } from "@/components/admin/GuestTable";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
 
   const { data: guests, error } = await supabase
