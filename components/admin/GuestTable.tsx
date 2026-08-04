@@ -138,7 +138,7 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     </th>
 
                     <th className="px-5 py-4 text-left">
-                    Para de vuelta
+                    Parada de vuelta
                     </th>
 
                     <th className="px-5 py-4 text-left">

@@ -1,64 +1,93 @@
 import { z } from "zod";
 
-export const rsvpSchema = z.object({
-  assistance: z.enum([
-    "confirm",
-    "decline",
-  ]),
-  firstName: z
-    .string()
-    .trim()
-    .min(2, "Introduce tu nombre"),
+export const rsvpSchema = z
+  .object({
+    assistance: z.enum([
+      "confirm",
+      "decline",
+    ]),
 
-  lastName: z
-    .string()
-    .trim()
-    .min(2, "Introduce tus apellidos"),
+    firstName: z
+      .string()
+      .trim()
+      .min(2, "Introduce tu nombre"),
 
-  menu: z.enum([
-    "meat",
-    "vegetarian",
-    "child",
-    "fish",
-  ]),
+    lastName: z
+      .string()
+      .trim()
+      .min(2, "Introduce tus apellidos"),
 
-  foodNote: z
-    .string()
-    .trim()
-    .optional(),
+    menu: z.enum([
+      "meat",
+      "vegetarian",
+      "child",
+      "fish",
+    ]),
 
-  bus: z.enum([
-    "yes",
-    "no",
-  ]),
+    foodNote: z
+      .string()
+      .trim()
+      .optional(),
 
-  busJourney: z
-  .enum([
-    "outbound",
-    "return",
-    "both",
-  ])
-  .optional(),
+    bus: z.enum([
+      "yes",
+      "no",
+    ]),
 
-returnStop: z
-  .enum([
-    "montequinto",
-    "melia",
-    "puerta-jerez",
-  ])
-  .optional(),
+    busJourney: z
+      .enum([
+        "outbound",
+        "return",
+        "both",
+      ])
+      .optional(),
 
-  busNotes: z.string().optional(),
+    returnStop: z
+      .enum([
+        "montequinto",
+        "melia",
+        "puerta-jerez",
+      ])
+      .optional(),
 
-  favouriteDrink: z
-    .string()
-    .trim()
-    .optional(),
+    busNotes: z
+      .string()
+      .trim()
+      .optional(),
 
-  mustPlaySong: z
-    .string()
-    .trim()
-    .optional()
-});
+    favouriteDrink: z
+      .string()
+      .trim()
+      .optional(),
+
+    mustPlaySong: z
+      .string()
+      .trim()
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    // Si necesita autobús, debe elegir trayecto
+    if (data.bus === "yes" && !data.busJourney) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["busJourney"],
+        message: "Selecciona el trayecto del autobús.",
+      });
+    }
+
+    // Si hace vuelta (o ida y vuelta), debe indicar la parada
+    if (
+      data.bus === "yes" &&
+      (data.busJourney === "return" ||
+        data.busJourney === "both") &&
+      !data.returnStop
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["returnStop"],
+        message: "Selecciona la parada de vuelta.",
+      });
+    }
+  });
 
 export type RSVPFormData = z.infer<typeof rsvpSchema>;

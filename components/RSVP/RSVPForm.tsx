@@ -353,6 +353,11 @@ export default function RSVPForm() {
             </Select>
           )}
         />
+        {errors.busJourney && (
+        <p className="mt-2 text-sm text-red-500">
+          {errors.busJourney.message}
+        </p>
+        )}
       </div>
 
       {(busJourney === "return" || busJourney === "both") && (
@@ -390,6 +395,11 @@ export default function RSVPForm() {
               </Select>
             )}
           />
+          {errors.returnStop && (
+            <p className="mt-2 text-sm text-red-500">
+              {errors.returnStop.message}
+            </p>
+          )}
         </div>
       )}
 
