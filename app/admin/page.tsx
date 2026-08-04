@@ -58,7 +58,7 @@ export default async function AdminPage() {
 
       {/* KPIs */}
 
-      <div className="mb-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-6">
+      <div className="mb-10 grid gap-6 grid-cols-2 sm:grid-cols-3 xl:grid-cols-6">
 
         <Card className="rounded-3xl p-6">
           <p className="text-sm uppercase tracking-widest text-stone-500">
