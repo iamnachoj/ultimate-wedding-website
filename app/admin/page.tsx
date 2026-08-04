@@ -17,21 +17,28 @@ export default async function AdminPage() {
   if (error) {
     throw new Error(error.message);
   }
+  // filter out guests that have declined the invitation
+  const filteredGuests = guests.filter(
+    (g) => g.assistance === "confirm"
+  );
+  const totalGuests = filteredGuests.length ;
 
-  const totalGuests = guests.length;
+  const busGuests = filteredGuests.filter((g) => g.bus === "yes").length;
 
-  const busGuests = guests.filter((g) => g.bus === "yes").length;
-
-  const meat = guests.filter(
+  const meat = filteredGuests.filter(
     (g) => g.menu === "meat"
   ).length;
 
-  const fish = guests.filter(
+  const fish = filteredGuests.filter(
     (g) => g.menu === "fish"
   ).length;
 
-  const vegetarians = guests.filter(
+  const vegetarians = filteredGuests.filter(
     (g) => g.menu === "vegetarian"
+  ).length;
+
+  const children = filteredGuests.filter(
+    (g) => g.menu === "child"
   ).length;
 
   return (
@@ -51,11 +58,11 @@ export default async function AdminPage() {
 
       {/* KPIs */}
 
-      <div className="mb-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="mb-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-6">
 
         <Card className="rounded-3xl p-6">
           <p className="text-sm uppercase tracking-widest text-stone-500">
-            Invitados
+            Confirmados
           </p>
 
           <p className="mt-3 text-5xl font-heading">
@@ -100,6 +107,16 @@ export default async function AdminPage() {
 
           <p className="mt-3 text-5xl font-heading">
             {vegetarians}
+          </p>
+        </Card>
+
+        <Card className="rounded-3xl p-6">
+          <p className="text-sm uppercase tracking-widest text-stone-500">
+            Infantil
+          </p>
+
+          <p className="mt-3 text-5xl font-heading">
+            {children}
           </p>
         </Card>
 

@@ -33,7 +33,7 @@ export default function RootLayout({
         heading.variable
       )}
     >
-      <body className="min-h-full bg-stone-100 font-sans text-stone-800">
+      <body className="min-h-full font-sans text-stone-800">
         {children}
       </body>
     </html>

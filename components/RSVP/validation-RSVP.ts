@@ -18,6 +18,7 @@ export const rsvpSchema = z.object({
   menu: z.enum([
     "meat",
     "vegetarian",
+    "child",
     "fish",
   ]),
 

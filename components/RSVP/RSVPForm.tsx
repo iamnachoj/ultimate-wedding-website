@@ -191,7 +191,7 @@ export default function RSVPForm() {
             <RadioGroup
               value={field.value}
               onValueChange={field.onChange}
-              className="mt-4 space-y-3 md:grid md:grid-cols-3"
+              className="mt-4 space-y-3 md:grid md:grid-cols-4"
             >
               <div className="flex items-center gap-3">
                 <RadioGroupItem
@@ -223,6 +223,17 @@ export default function RSVPForm() {
 
                 <Label htmlFor="vegetarian">
                   Vegetariano
+                </Label>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <RadioGroupItem
+                  value="child"
+                  id="child"
+                />
+
+                <Label htmlFor="child">
+                  Infantil
                 </Label>
               </div>
 
@@ -327,17 +338,17 @@ export default function RSVPForm() {
               </SelectTrigger>
 
               <SelectContent>
+                <SelectItem value="both">
+                  Ida y vuelta
+                </SelectItem>
+
                 <SelectItem value="outbound">
                   Ida (Torre del Oro · 13:30h)
                 </SelectItem>
 
                 <SelectItem value="return">
                   Vuelta (02:00h)
-                </SelectItem>
-
-                <SelectItem value="both">
-                  Ida y vuelta
-                </SelectItem>
+                </SelectItem>                
               </SelectContent>
             </Select>
           )}
@@ -420,7 +431,7 @@ export default function RSVPForm() {
 
           <Input
             id="favouriteDrink"
-            placeholder="Ron cola 🍹"
+            placeholder="Ron cola ★"
             {...register("favouriteDrink")}
           />
 
@@ -438,7 +449,7 @@ export default function RSVPForm() {
 
           <Input
             id="mustPlaySong"
-            placeholder="I gotta a feeling 🎶"
+            placeholder="La Macarena! 🎶"
             {...register("mustPlaySong")}
           />
 
@@ -451,14 +462,14 @@ export default function RSVPForm() {
       </div>
       <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-center lg:text-left text-sm leading-6 text-stone-600"> 
         <p>
-          🌸 Revisa los datos antes de confirmar tu asistencia. Si necesitas realizar
+          ✦ Revisa los datos antes de confirmar tu asistencia. Si necesitas realizar
           algún cambio más adelante, ponte en contacto con nosotros.
         </p>
         <p>
-          🌸 No olvides pedirle a tu +1 que también rellene los datos, o rellenar el formulario por ellos.
+          ✦ No olvides pedirle a tu +1 que también rellene los datos, o rellenar el formulario por ellos.
         </p>
          <p>
-          🌸 Por último, ¡ven con muchas ganas de disfrutar de la fiesta! ¡Te esperamos!
+          ✦ Por último, ¡ven con muchas ganas de disfrutar de la fiesta! ¡Te esperamos!
         </p>
       </div>
       <div>

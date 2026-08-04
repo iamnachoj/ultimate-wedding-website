@@ -7,12 +7,12 @@ type Props = {
 
 export default function SectionTitle({ title, subtitle }: Props) {
   return (
-    <div className="mb-14 text-center">
+    <div className="mb-14 text-center text-cyan-900">
       <Image
-        src="/flower.png"
+        src="/logo-wedding.png"
         alt=""
-        width={34}
-        height={34}
+        width={104}
+        height={104}
         className="mx-auto mb-4 opacity-70"
       />
 
@@ -21,7 +21,7 @@ export default function SectionTitle({ title, subtitle }: Props) {
       </h2>
 
       {subtitle && (
-        <p className="mx-auto mt-4 max-w-xl text-stone-600">
+        <p className="mx-auto mt-4 max-w-xl text-bold text-cyan-900">
           {subtitle}
         </p>
       )}

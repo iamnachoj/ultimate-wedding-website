@@ -5,13 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-background: #faf7f2;
+  --color-background: #FBF7EE;
   --color-primary: #6d7c61;
   --color-accent: #c4a77d;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: #FBF7EE;
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);

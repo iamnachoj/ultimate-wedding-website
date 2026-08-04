@@ -7,7 +7,7 @@ export default function RSVP() {
   return (
     <section
       id="rsvp"
-      className="bg-stone-50 py-12 lg:py-28"
+      className="py-12 lg:py-28"
     >
       <Container>
         <SectionTitle
