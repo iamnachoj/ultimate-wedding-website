@@ -46,11 +46,11 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     </th>
 
                     <th className="px-5 py-4 text-left">
-                    Bus
+                    Autobús
                     </th>
 
                     <th className="px-5 py-4 text-left">
-                    Viaje de bus
+                     Trayecto
                     </th>
 
                     <th className="px-5 py-4 text-left">
@@ -96,15 +96,15 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     </td>
 
                     <td className="px-5 py-4">
-                        {guest.menu}
+                        {guest.assistance === "confirm" ? (guest.menu === "meat" ? "Carne" : guest.menu === "fish" ? "Pescado" : guest.menu === "vegetarian" ? "Vegetariano" : guest.menu === "child" ? "Niño" : "—") : "—"}
                     </td>
 
                     <td className="px-5 py-4">
-                        {guest.bus === "yes" ? "🚌 Sí" : "—"}
+                        {guest.bus === "yes" ? "Sí" : "—"}
                     </td>
 
                     <td className="px-5 py-4">
-                        {guest.bus_journey === "outbound" ? "Ida 🚌" : guest.bus_journey === "return" ? "Vuelta 🚌" : guest.bus_journey === "both" ? "Ida y vuelta 🚌" : "—"}
+                        {guest.bus_journey === "outbound" ? "Ida" : guest.bus_journey === "return" ? "Vuelta" : guest.bus_journey === "both" ? "Ida y vuelta" : "—"}
                     </td>
 
                     <td className="px-5 py-4">
