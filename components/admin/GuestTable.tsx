@@ -108,7 +108,7 @@ export function GuestTable({ guests }: { guests: any[] }) {
                 />
                  <button
                     onClick={downloadExcel}
-                    className="ml-4 cursor-pointer rounded-xl bg-stone-900 px-5 py-2 text-white transition hover:bg-stone-700"
+                    className="mt-4 lg:mt-0 lg:ml-4 cursor-pointer rounded-xl bg-stone-900 px-5 py-2 text-white transition hover:bg-stone-700"
                 >
                     Descargar Excel
                 </button>
