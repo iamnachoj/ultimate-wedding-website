@@ -47,17 +47,17 @@ returnStop: z
   ])
   .optional(),
 
-busNotes: z.string().optional(),
+  busNotes: z.string().optional(),
 
   favouriteDrink: z
     .string()
     .trim()
-    .min(2, "Cuéntanos tu bebida favorita"),
+    .optional(),
 
   mustPlaySong: z
     .string()
     .trim()
-    .min(2, "¡Queremos conocer ese temazo!"),
+    .optional()
 });
 
 export type RSVPFormData = z.infer<typeof rsvpSchema>;

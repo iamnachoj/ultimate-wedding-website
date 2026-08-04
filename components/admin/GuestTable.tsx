@@ -37,6 +37,7 @@ export function GuestTable({ guests }: { guests: any[] }) {
                 <thead className="bg-stone-100">
 
                 <tr>
+                    <th className="px-5 py-4 text-left">Asistencia</th>
 
                     <th className="px-5 py-4 text-left">Nombre</th>
 
@@ -87,6 +88,9 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     className="border-t transition-colors hover:bg-stone-50"
                     >
 
+                    <td className="px-5 py-4 font-medium">
+                        {guest.assistance === "confirm" ? "✅ Sí" : "❌ No"}
+                    </td>
                     <td className="px-5 py-4 font-medium">
                         {guest.first_name} {guest.last_name}
                     </td>

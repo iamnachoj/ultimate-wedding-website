@@ -95,7 +95,7 @@ export default function RSVPForm() {
       className="space-y-8"
     >
 
-        <div>
+      <div>
         <Label className="mb-2">
           ¿Nos acompañarás en nuestro gran día?
         </Label>

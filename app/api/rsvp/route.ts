@@ -13,6 +13,8 @@ export async function POST(request: Request) {
       .insert({
         first_name: body.firstName,
         last_name: body.lastName,
+        
+        assistance: body.assistance,
 
         menu: body.menu,
         food_note: body.foodNote,
