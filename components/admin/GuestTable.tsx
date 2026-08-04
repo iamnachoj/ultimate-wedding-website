@@ -104,11 +104,11 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     value={nameFilter}
                     onChange={(event) => setNameFilter(event.target.value)}
                     placeholder="Ej: María García"
-                    className="max-w-[1000px] rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm outline-none transition focus:border-stone-500"
+                    className="max-w-[1000px] rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm outline-none transition focus:border-stone-500 mr-4"
                 />
                  <button
                     onClick={downloadExcel}
-                    className="mt-4 lg:mt-0 lg:ml-4 cursor-pointer rounded-xl bg-stone-900 px-5 py-2 text-white transition hover:bg-stone-700"
+                    className="mt-4 lg:mt-0 cursor-pointer rounded-xl bg-stone-900 px-5 py-2 text-white transition hover:bg-stone-700"
                 >
                     Descargar Excel
                 </button>
@@ -154,7 +154,7 @@ export function GuestTable({ guests }: { guests: any[] }) {
                     </th>
 
                     <th className="px-5 py-4 text-left">
-                    Observaciones de comida
+                    Restricciones de comida
                     </th>
                     <th className="px-5 py-4 text-right">
                         Acciones

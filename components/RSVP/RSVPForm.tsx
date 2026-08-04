@@ -149,7 +149,7 @@ export default function RSVPForm() {
 
           <Input
             id="firstName"
-            placeholder="Jesús"
+            placeholder="Introduce tu nombre"
             {...register("firstName")}
           />
 
@@ -167,7 +167,7 @@ export default function RSVPForm() {
 
           <Input
             id="lastName"
-            placeholder="Castillo Bravo"
+            placeholder="Introduce tus apellidos"
             {...register("lastName")}
           />
 
