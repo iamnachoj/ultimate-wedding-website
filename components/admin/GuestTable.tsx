@@ -2,9 +2,70 @@
 
 import { useState } from "react";
 import { Card } from "../ui/card";
+import * as XLSX from "xlsx";
 
 export function GuestTable({ guests }: { guests: any[] }) {
+
+    function downloadExcel() {
+  const data = filteredRows.map((guest) => ({
+    Asistencia: guest.assistance === "confirm" ? "Sí" : "No",
+    Nombre: `${guest.first_name} ${guest.last_name}`,
+    Menú:
+      guest.assistance !== "confirm"
+        ? "—"
+        : guest.menu === "meat"
+        ? "Carne"
+        : guest.menu === "fish"
+        ? "Pescado"
+        : guest.menu === "vegetarian"
+        ? "Vegetariano"
+        : guest.menu === "child"
+        ? "Niño"
+        : "—",
+    Autobús: guest.bus === "yes" ? "Sí" : "No",
+    Trayecto:
+      guest.bus_journey === "outbound"
+        ? "Ida"
+        : guest.bus_journey === "return"
+        ? "Vuelta"
+        : guest.bus_journey === "both"
+        ? "Ida y vuelta"
+        : "—",
+    "Parada vuelta":
+      guest.return_stop === "montequinto"
+        ? "Montequinto"
+        : guest.return_stop === "melia"
+        ? "Meliá Sevilla"
+        : guest.return_stop === "puerta-jerez"
+        ? "Puerta Jerez"
+        : "—",
+    "Notas autobús": guest.bus_notes ?? "",
+    Bebida: guest.favourite_drink ?? "",
+    Temazo: guest.must_play_song ?? "",
+    "Observaciones comida": guest.food_note ?? "",
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Invitados");
+
+  XLSX.writeFile(workbook, "invitados-boda.xlsx");
+}
+
     const [rows, setRows] = useState(guests);
+    const [nameFilter, setNameFilter] = useState("");
+
+    const normalizedFilter = nameFilter.trim().toLowerCase();
+    const filteredRows = rows.filter((guest) => {
+        if (!normalizedFilter) return true;
+
+        const fullName = `${guest.first_name ?? ""} ${guest.last_name ?? ""}`
+            .trim()
+            .toLowerCase();
+
+        return fullName.includes(normalizedFilter);
+    });
 
     async function deleteGuest(id: string) {
         const ok = window.confirm(
@@ -29,6 +90,29 @@ export function GuestTable({ guests }: { guests: any[] }) {
 
     return (
         <Card className="overflow-hidden rounded-3xl">
+
+            <div className="border-b bg-stone-50 p-4">
+                <label
+                    htmlFor="guest-name-filter"
+                    className="mb-2 block text-sm font-medium text-stone-700"
+                >
+                    Filtrar por nombre
+                </label>
+                <input
+                    id="guest-name-filter"
+                    type="text"
+                    value={nameFilter}
+                    onChange={(event) => setNameFilter(event.target.value)}
+                    placeholder="Ej: María García"
+                    className="max-w-[1000px] rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm outline-none transition focus:border-stone-500"
+                />
+                 <button
+                    onClick={downloadExcel}
+                    className="ml-4 cursor-pointer rounded-xl bg-stone-900 px-5 py-2 text-white transition hover:bg-stone-700"
+                >
+                    Descargar Excel
+                </button>
+            </div>
 
             <div className="overflow-x-auto">
 
@@ -82,7 +166,7 @@ export function GuestTable({ guests }: { guests: any[] }) {
 
                 <tbody>
 
-                {rows.map((guest) => (
+                {filteredRows.map((guest) => (
                     <tr
                     key={guest.id}
                     className="border-t transition-colors hover:bg-stone-50"
