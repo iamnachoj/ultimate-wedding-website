@@ -487,11 +487,11 @@ export default function RSVPForm() {
           type="submit"
           size="lg"
           disabled={isSubmitting}
-          className="w-full rounded-full py-6 text-base"
+          className="w-full rounded-full py-6 text-base cursor-pointer"
         >
           {isSubmitting
             ? "Enviando..."
-            : "Confirmar asistencia"}
+            : "Enviar respuesta"}
         </Button>
       </div>
     </form>

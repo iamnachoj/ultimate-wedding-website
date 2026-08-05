@@ -7,43 +7,43 @@ import * as XLSX from "xlsx";
 export function GuestTable({ guests }: { guests: any[] }) {
 
     function downloadExcel() {
-  const data = filteredRows.map((guest) => ({
-    Asistencia: guest.assistance === "confirm" ? "Sí" : "No",
-    Nombre: `${guest.first_name} ${guest.last_name}`,
-    Menú:
-      guest.assistance !== "confirm"
-        ? "—"
-        : guest.menu === "meat"
-        ? "Carne"
-        : guest.menu === "fish"
-        ? "Pescado"
-        : guest.menu === "vegetarian"
-        ? "Vegetariano"
-        : guest.menu === "child"
-        ? "Niño"
-        : "—",
-    Autobús: guest.bus === "yes" ? "Sí" : "No",
-    Trayecto:
-      guest.bus_journey === "outbound"
-        ? "Ida"
-        : guest.bus_journey === "return"
-        ? "Vuelta"
-        : guest.bus_journey === "both"
-        ? "Ida y vuelta"
-        : "—",
-    "Parada vuelta":
-      guest.return_stop === "montequinto"
-        ? "Montequinto"
-        : guest.return_stop === "melia"
-        ? "Meliá Sevilla"
-        : guest.return_stop === "puerta-jerez"
-        ? "Puerta Jerez"
-        : "—",
-    "Notas autobús": guest.bus_notes ?? "",
-    Bebida: guest.favourite_drink ?? "",
-    Temazo: guest.must_play_song ?? "",
-    "Observaciones comida": guest.food_note ?? "",
-  }));
+    const data = filteredRows.map((guest) => ({
+        Asistencia: guest.assistance === "confirm" ? "Sí" : "No",
+        Nombre: `${guest.first_name} ${guest.last_name}`,
+        Menú:
+        guest.assistance !== "confirm"
+            ? "—"
+            : guest.menu === "meat"
+            ? "Carne"
+            : guest.menu === "fish"
+            ? "Pescado"
+            : guest.menu === "vegetarian"
+            ? "Vegetariano"
+            : guest.menu === "child"
+            ? "Niño"
+            : "—",
+        Autobús: guest.bus === "yes" ? "Sí" : "No",
+        Trayecto:
+        guest.bus_journey === "outbound"
+            ? "Ida"
+            : guest.bus_journey === "return"
+            ? "Vuelta"
+            : guest.bus_journey === "both"
+            ? "Ida y vuelta"
+            : "—",
+        "Parada vuelta":
+        guest.return_stop === "montequinto"
+            ? "Montequinto"
+            : guest.return_stop === "melia"
+            ? "Meliá Sevilla"
+            : guest.return_stop === "puerta-jerez"
+            ? "Puerta Jerez"
+            : "—",
+        "Notas autobús": guest.bus_notes ?? "",
+        Bebida: guest.favourite_drink ?? "",
+        Temazo: guest.must_play_song ?? "",
+        "Observaciones comida": guest.food_note ?? "",
+    }));
 
   const worksheet = XLSX.utils.json_to_sheet(data);
   const workbook = XLSX.utils.book_new();
